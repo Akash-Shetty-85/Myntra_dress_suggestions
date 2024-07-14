@@ -1,0 +1,142 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>WardRobe</title>
+    Bootstrap CSS
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #combo {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        #combo_image {
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
+    <script>
+        async function getCombination() {
+            const response = await fetch('/get_combination');
+            if (response.ok) {
+                const combination = await response.json();
+                document.getElementById('combo_image').src = combination.image;
+                document.getElementById('combo_image').style.display = 'block';
+                document.getElementById('combo').innerText = '';
+            } else {
+                document.getElementById('combo').innerText = 'No more combinations available';
+                document.getElementById('combo_image').style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="my-4">WardRobe Dress Suggestion</h1>
+        <div>
+            <p id="combo">Click the button to see a combination</p>
+            <img id="combo_image" src="" alt="Combination Image" class="img-fluid rounded shadow mx-auto d-" style="display: none;">
+        </div>
+        <button class="btn btn-primary mt-4" onclick="getCombination()">Get Next Combination</button>
+    </div>
+    
+    Bootstrap JS and dependencies
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> -->
+<!-- ------------------------------------------------------------------------------------------------------------------------------------ -->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WardRobe</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #combo {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        #combo_image {
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
+    <script>
+        let history = [];
+        let currentIndex = -1;
+
+        async function getCombination() {
+            const response = await fetch('/get_combination');
+            if (response.ok) {
+                const combination = await response.json();
+                history.push(combination);
+                currentIndex = history.length - 1;
+                updateUI();
+            } else {
+                document.getElementById('combo').innerText = 'No more combinations available';
+                document.getElementById('combo_image').style.display = 'none';
+            }
+        }
+
+        function updateUI() {
+            const comboImage = document.getElementById('combo_image');
+            if (currentIndex >= 0 && currentIndex < history.length) {
+                const combination = history[currentIndex];
+                comboImage.src = combination.image;
+                comboImage.style.display = 'block';
+                document.getElementById('combo').innerText = '';
+            }
+        }
+
+        function showPreviousCombination() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateUI();
+            }
+        }
+
+        function showNextCombination() {
+            if (currentIndex < history.length - 1) {
+                currentIndex++;
+                updateUI();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="my-4">WardRobe Dress Suggestion</h1>
+        <div>
+            <p id="combo">Click the button to see a combination</p>
+            <img id="combo_image" src="" alt="Combination Image" class="img-fluid rounded shadow mx-auto" style="display: none;">
+        </div>
+        <button class="btn btn-secondary mt-4" onclick="showPreviousCombination()">Previous Combination</button>
+        <button class="btn btn-primary mt-4" onclick="getCombination()">Get Next Combination</button>
+    </div>
+    
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

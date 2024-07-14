@@ -1,0 +1,11 @@
+1. good colored combination attires.
+
+2. gender based suggestions option button like navigation bar with only two options.
+
+3. weather based suggestion as toggel buttons for ragu like peoples.
+
+4. navigation between the suggestions. 
+
+5. making of seperate buttons for selecting the required accesories. 
+
+6. Good UI and UX algo for better suggestions.
